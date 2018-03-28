@@ -2,13 +2,13 @@ var grid;
 
 function setup () {
   createCanvas(400, 400);
-  // grid = new Grid(20);
+  grid = new Grid(20);
 }
 
 function draw () {
   background(250);
   
-  // grid.draw();
+  grid.draw();
 }
 
 class Grid {
