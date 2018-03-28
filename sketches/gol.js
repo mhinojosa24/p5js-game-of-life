@@ -7,8 +7,8 @@ function setup () {
 
 function draw () {
   background(250);
-  
-  // grid.draw();
+  //this is a constructor
+  grid.draw();
 }
 
 class Grid {
