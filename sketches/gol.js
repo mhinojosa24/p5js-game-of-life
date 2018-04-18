@@ -36,7 +36,7 @@ class Grid {
       }
     }
 
-//    print(this.cells);
+    //print(this.cells);
   }
   updateNeighborCounts () {
   // for each cell in the grid
@@ -44,19 +44,27 @@ class Grid {
   // for each of the cell's neighbors, if it is alive add 1 to neighborCount
     for (var xOffset = -1; xOffset <= 1; xOffset++) {
       for (var yOffset = -1; yOffset <= 1; yOffset++) {
-        var neighborX = xOffset
-        var neighborY = yOffset
+        var neighborX = currentCell.column + xOffset;
+        var neighborY = currentCell.row + yOffset;
         
-        //if (neighborX)
- 
+        var sQuares = this.NeighborHood[xOffset][yOffset];
+        
+        
+        
+        "&& sQuares[neighborX][neighborY] == currentCell"
+        if (sQuares[xOffset][yOffset] == false ){
+          liveNeighborCount += 1;
+        }
+        
         // do something with neighborX and neighborY
         
           
-        
+        print(currentCell.liveNeighborCount)
         
         
         
     }
+      
       
   }
     
