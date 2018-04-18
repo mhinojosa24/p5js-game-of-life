@@ -46,29 +46,26 @@ class Grid {
       for (var yOffset = -1; yOffset <= 1; yOffset++) {
         var neighborX = currentCell.column + xOffset;
         var neighborY = currentCell.row + yOffset;
+        //var sQuares = this.NeighborHood[xOffset][yOffset];
+        //count all neighbors that ARE ALIVE and DO NOT count its self
+        if ()
         
-        var sQuares = this.NeighborHood[xOffset][yOffset];
         
+        //&& sQuares[neighborX][neighborY] == currentCell
+        //if (sQuares[xOffset][yOffset] == false ){
+          //liveNeighborCount += 1;
+        //}
         
-        
-        "&& sQuares[neighborX][neighborY] == currentCell"
-        if (sQuares[xOffset][yOffset] == false ){
-          liveNeighborCount += 1;
-        }
-        
-        // do something with neighborX and neighborY
-        
-          
         print(currentCell.liveNeighborCount)
-        
-        
-        
     }
       
       
   }
     
 }
+  updatePopulation () {
+  
+  }
 
   draw () {
     for (var column = 0; column < this.numberOfColumns; column ++) {
@@ -118,6 +115,10 @@ class Cell {
    
   setIsAlive (isAlive) {
     this.isAlive = isAlive;
+  }
+  
+  liveOrDie () {
+  
   }
 }
 
