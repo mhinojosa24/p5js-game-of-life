@@ -11,12 +11,14 @@ function setup () {
      //print(array[i]); 
     //}
   //}
+
 }
 
 function draw () {
   background(0);
 
   grid.draw();
+//  grid.updateNeighborCounts();
 }
 
 class Grid {
@@ -42,29 +44,60 @@ class Grid {
   // for each cell in the grid
   // reset it's neighbor count to 0
   // for each of the cell's neighbors, if it is alive add 1 to neighborCount
-    for (var xOffset = -1; xOffset <= 1; xOffset++) {
-      for (var yOffset = -1; yOffset <= 1; yOffset++) {
-        var neighborX = currentCell.column + xOffset;
-        var neighborY = currentCell.row + yOffset;
-        //var sQuares = this.NeighborHood[xOffset][yOffset];
-        //count all neighbors that ARE ALIVE and DO NOT count its self
-        if ()
+	for (var column = 0; column < this.numberOfColumns; column ++) {
+      for (var row = 0; row < this.numberOfRows; row++) {
+        var currentCell = this.cells[column][row];
         
-        
-        //&& sQuares[neighborX][neighborY] == currentCell
-        //if (sQuares[xOffset][yOffset] == false ){
-          //liveNeighborCount += 1;
-        //}
+		// count all the alive neighbors
+        for (var xOffset = -1; xOffset <= 1; xOffset++) {
+          for (var yOffset = -1; yOffset <= 1; yOffset++) {
+            var neighborX = currentCell.column + xOffset;
+            var neighborY = currentCell.row + yOffset;
+            
+			// cell 0, 0
+            // check first if neighborX and neighborY are valid
+            // if they are valid positions, check the neighhor
+            // valid values are never negative, and not outside the size of the grid
+            // else, do nothing
+            
+            var validPosition = neighborX >= 0 && neighborY >= 0;
+            
+            if (validPosition) {
+              var neighborCell = this.cells[neighborX][neighborY];
+              print(neighborCell);
+
+             if (neighborCell.isAlive == true ){
+                currentCell.liveNeighborCount += 1;
+              }
+            }
+            
+            //var sQuares = this.NeighborHood[xOffset][yOffset];
+            //count all neighbors that ARE ALIVE and DO NOT count its self
+    //        if ()
+
+
+            //&& sQuares[neighborX][neighborY] == currentCell
+            //if (sQuares[xOffset][yOffset] == false ){
+              //liveNeighborCount += 1;
+            //}
+
+            
+        }
         
         print(currentCell.liveNeighborCount)
+        // if currentCEll is alive, subtract 1
+        
+      }
     }
+    
+    
       
       
   }
     
 }
   updatePopulation () {
-  
+  	
   }
 
   draw () {
