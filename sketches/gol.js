@@ -97,7 +97,13 @@ class Grid {
     
 }
   updatePopulation () {
-  	
+    
+    var liveOrDie =  for (var column = 0; column < this.numberOfColumns; column ++) {
+      			       for (var row = 0; row < this.numberOfRows; row++) {
+        			     this.cells[column][row] = new Cell(column, row, cellSize);
+                         
+      }
+    }
   }
 
   draw () {
