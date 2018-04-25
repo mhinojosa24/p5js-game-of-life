@@ -3,6 +3,15 @@ var grid;
 function setup () {
   createCanvas(400, 400);
   grid = new Grid(100);
+  
+  //var array = [0, 1, 2];
+  
+  //for (var i = -1; i < array.length; i ++) {
+	//if (i >= 0) {
+     //print(array[i]); 
+    //}
+  //}
+
 }
 
 function draw () {
@@ -28,6 +37,7 @@ class Grid {
         this.cells[column][row] = new Cell(column, row, cellSize);
       }
     }
+
     //print(this.cells);
   }
   updateNeighborCounts () {
@@ -68,7 +78,10 @@ class Grid {
               //liveNeighborCount += 1;
             //}
         }
+        
         print(currentCell.liveNeighborCount)
+        // if currentCEll is alive, subtract 1
+        
       }
     }
   }
@@ -108,10 +121,10 @@ class Cell {
     var isAlive = floor(random(2));
     
     if (isAlive == 0){
-      //this.isAlive = false;
+//      this.isAlive = false;
       this.setIsAlive(false);
     } else {
-      //this.isAlive = true;
+//      this.isAlive = true;
       this.setIsAlive(true);
     }
   }
@@ -123,6 +136,7 @@ class Cell {
     } else {
       fill(0,255,0);
     }
+
     noStroke();
     rect(this.column * this.size + 1, this.row * this.size + 1, this.size - 1, this.size - 1);
   }
@@ -133,10 +147,10 @@ class Cell {
   
   liveOrDie (isCell) {
     if (isCell.isAlive == true && liveNeighborCount < 2){                                           //underpopulation
-      
-    } else if (isCell.isAlive == true && liveNeighborCount == 2 || liveNeighborCount == 3){         //next generation
-        
-    } else if (isCell.isAlive == true && liveNeighborCount > 3){                                    //overpopulation
+      isALive = false;
+    } else if (isCell.isAlive == true && liveNeighborCount == 2 || liveNeighborCount == 3 ){         //next generation
+      isAlive = true;
+    } else if (isCell.isAlive == true && liveNeighborCount > 3 ){                                    //overpopulation
       
     } else {                                                                                        //reproduction
       
