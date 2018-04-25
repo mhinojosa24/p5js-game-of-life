@@ -3,15 +3,6 @@ var grid;
 function setup () {
   createCanvas(400, 400);
   grid = new Grid(100);
-  
-  //var array = [0, 1, 2];
-  
-  //for (var i = -1; i < array.length; i ++) {
-	//if (i >= 0) {
-     //print(array[i]); 
-    //}
-  //}
-
 }
 
 function draw () {
@@ -37,7 +28,6 @@ class Grid {
         this.cells[column][row] = new Cell(column, row, cellSize);
       }
     }
-
     //print(this.cells);
   }
   updateNeighborCounts () {
@@ -73,35 +63,21 @@ class Grid {
             
             //var sQuares = this.NeighborHood[xOffset][yOffset];
             //count all neighbors that ARE ALIVE and DO NOT count its self
-    //        if ()
-
-
-            //&& sQuares[neighborX][neighborY] == currentCell
+            //if ()ares[neighborX][neighborY] == currentCell
             //if (sQuares[xOffset][yOffset] == false ){
               //liveNeighborCount += 1;
             //}
-
-            
         }
-        
         print(currentCell.liveNeighborCount)
-        // if currentCEll is alive, subtract 1
-        
       }
     }
-    
-    
-      
-      
   }
-    
 }
   updatePopulation () {
-    
-    var liveOrDie =  for (var column = 0; column < this.numberOfColumns; column ++) {
-      			       for (var row = 0; row < this.numberOfRows; row++) {
-        			     this.cells[column][row] = new Cell(column, row, cellSize);
-                         
+    for (var column = 0; column < this.numberOfColumns; column ++) {
+      for (var row = 0; row < this.numberOfRows; row++) {
+        var isCell = this.cells[column][row];
+        isCell.liveOrDie();
       }
     }
   }
@@ -132,10 +108,10 @@ class Cell {
     var isAlive = floor(random(2));
     
     if (isAlive == 0){
-//      this.isAlive = false;
+      //this.isAlive = false;
       this.setIsAlive(false);
     } else {
-//      this.isAlive = true;
+      //this.isAlive = true;
       this.setIsAlive(true);
     }
   }
@@ -147,7 +123,6 @@ class Cell {
     } else {
       fill(0,255,0);
     }
-
     noStroke();
     rect(this.column * this.size + 1, this.row * this.size + 1, this.size - 1, this.size - 1);
   }
@@ -156,8 +131,16 @@ class Cell {
     this.isAlive = isAlive;
   }
   
-  liveOrDie () {
-  
+  liveOrDie (isCell) {
+    if (isCell.isAlive == true && liveNeighborCount < 2){                                           //underpopulation
+      
+    } else if (isCell.isAlive == true && liveNeighborCount == 2 || liveNeighborCount == 3){         //next generation
+        
+    } else if (isCell.isAlive == true && liveNeighborCount > 3){                                    //overpopulation
+      
+    } else {                                                                                        //reproduction
+      
+    }                                                                                        
   }
 }
 
