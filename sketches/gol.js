@@ -18,7 +18,9 @@ function draw () {
   background(0);
 
   grid.draw();
-//  grid.updateNeighborCounts();
+  grid.updateNeighborCounts();
+	grid.updatePopulation();
+	grid.liveOrDie();
 }
 
 class Grid {
@@ -37,17 +39,18 @@ class Grid {
         this.cells[column][row] = new Cell(column, row, cellSize);
       }
     }
-
+    print("max")
     //print(this.cells);
   }
   updateNeighborCounts () {
   // for each cell in the grid
   // reset it's neighbor count to 0
   // for each of the cell's neighbors, if it is alive add 1 to neighborCount
+		        print("maxi")
 	for (var column = 0; column < this.numberOfColumns; column ++) {
       for (var row = 0; row < this.numberOfRows; row++) {
         var currentCell = this.cells[column][row];
-        
+        print("maxi")
 		// count all the alive neighbors
         for (var xOffset = -1; xOffset <= 1; xOffset++) {
           for (var yOffset = -1; yOffset <= 1; yOffset++) {
@@ -59,33 +62,22 @@ class Grid {
             // if they are valid positions, check the neighhor
             // valid values are never negative, and not outside the size of the grid
             // else, do nothing
-            
+                        
             var validPosition = neighborX >= 0 && neighborY >= 0;
-            
             if (validPosition) {
-              var neighborCell = this.cells[neighborX][neighborY];
-              print(neighborCell);
-
-             if (neighborCell.isAlive == true ){
-                currentCell.liveNeighborCount += 1;
-              }
+             // var neighborCell = this.cells[neighborX][neighborY]; 
+              
+            print("better")
+						if ( validPosition.isAlive == true ){
+							  currentCell.liveNeighborCount += 1;
+              } 
             }
-            
-            //var sQuares = this.NeighborHood[xOffset][yOffset];
-            //count all neighbors that ARE ALIVE and DO NOT count its self
-            //if ()ares[neighborX][neighborY] == currentCell
-            //if (sQuares[xOffset][yOffset] == false ){
-              //liveNeighborCount += 1;
-            //}
         }
-        
-        print(currentCell.liveNeighborCount)
-        // if currentCEll is alive, subtract 1
-        
       }
     }
   }
 }
+	
   updatePopulation () {
     for (var column = 0; column < this.numberOfColumns; column ++) {
       for (var row = 0; row < this.numberOfRows; row++) {
@@ -145,16 +137,18 @@ class Cell {
     this.isAlive = isAlive;
   }
   
-  liveOrDie (isCell) {
+  liveOrDie () {
     if (isCell.isAlive == true && liveNeighborCount < 2){                                           //underpopulation
       isALive = false;
-    } else if (isCell.isAlive == true && liveNeighborCount == 2 || liveNeighborCount == 3 ){         //next generation
+    } else if (isCell.isAlive == true && (liveNeighborCount == 2 || liveNeighborCount == 3 )){         //next generation
       isAlive = true;
     } else if (isCell.isAlive == true && liveNeighborCount > 3 ){                                    //overpopulation
-      
-    } else {                                                                                        //reproduction
-      
-    }                                                                                        
+      isAlive = false;
+    } else if (isCell.isAlive == false && liveNeighborCount == 3){  //reproduction
+      isAlive = true;
+    } else{ 
+			
+    }
   }
 }
 
