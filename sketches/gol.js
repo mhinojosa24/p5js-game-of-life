@@ -2,7 +2,7 @@ var grid;
 
 function setup () {
   createCanvas(400, 400);
-  grid = new Grid(100);
+  grid = new Grid(20);
   
 }
 
@@ -10,6 +10,7 @@ function draw () {
   background(0);
 
   grid.draw();
+	grid.randomize();
   grid.updateNeighborCounts();
 	//grid.updatePopulation();
 	//grid.liveOrDie();
@@ -57,10 +58,10 @@ class Grid {
                         
             var validPosition = neighborX >= 0 && neighborY >= 0;
             if (validPosition) {
-             // var neighborCell = this.cells[neighborX][neighborY]; 
+            	var neighborCell = this.cells[neighborX][neighborY]; 
               
-			if ( validPosition.isAlive == true ){
-				currentCell.liveNeighborCount += 1;
+			        if ( neighborCell.isAlive == true ){
+				        currentCell.liveNeighborCount += 1;
               } 
             }
             print(currentCell.liveNeighborCount)
@@ -72,19 +73,23 @@ class Grid {
 	
   
 
-  draw () {
-    for (var column = 0; column < this.numberOfColumns; column ++) {
-      for (var row = 0; row < this.numberOfRows; row++) {
-        var cell = this.cells[column][row];
+    draw () {
+      for (var column = 0; column < this.numberOfColumns; column ++) {
+        for (var row = 0; row < this.numberOfRows; row++) {
+          var cell = this.cells[column][row];
 
-        cell.draw();
+          cell.draw();
+        }
       }
     }
-  }
   
   randomize() {
     
   }
+  mousePressed () {
+    grid.randomize()
+  } 
+
 }
 
 
