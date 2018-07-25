@@ -3,7 +3,7 @@ var grid;
 function setup () {
   createCanvas(400, 400);
   grid = new Grid(20);
-	grid.randomize();
+  grid.randomize();
 }
 
 
@@ -15,7 +15,7 @@ function draw () {
 
 function mousePressed () {
   //grid.updatePopulation();
-	var randomColumn = floor(random(grid.numberOfColumns));
+  var randomColumn = floor(random(grid.numberOfColumns));
   var randomRow = floor(random(grid.numberOfRows));
 
   var randomCell = grid.cells[randomColumn][randomRow];
@@ -45,24 +45,24 @@ class Grid {
     }
     //print(this.cells)		
   }
-	updatePopulation () {
-	  for (var column = 0; column < this.numberOfColumns; column ++) {
-      for (var row = 0; row < this.numberOfRows; row++) {
+  updatePopulation () {
+    for (var column = 0; column < this.numberOfColumns; column ++) {
+      for (var row = 0; row < this.numberOfRows; row++) 
         this.cells[column][row].liveOrDie()
-        }
-      }
-		}
+     }
+   }
+ }
 	
 	
     randomize () {
-		  for (var column = 0; column < this.numberOfColumns; column ++) {
+      for (var column = 0; column < this.numberOfColumns; column ++) {
         for (var row = 0; row < this.numberOfRows; row++) {
 					var value = floor(random(2));
           this.cells[column][row].setIsAlive(value);
         }
       }
-			//print(this.cells)
-		}
+      //print(this.cells)
+    }
 	
     getNeighbors (currentCell) {
       var neighbors = [];
@@ -72,21 +72,19 @@ class Grid {
           var neighborX = currentCell.column + xOffset;
           var neighborY = currentCell.row + yOffset;
 					
-					var neighborCell = this.cells[neighborX][neighborY]; 
+          var neighborCell = this.cells[neighborX][neighborY]; 
 
-					//if (neighborCell != currentCell) {
-						//neighbors.push(currentCell)
-					//}
+	  //if (neighborCell != currentCell) {
+	    //neighbors.push(currentCell)
+	  //} 
         }				
       }
 			
       return neighbors;
     }
 	
-	
-	isValidPosition () {
-		
-	}
+    isValidPosition () {
+    }
 
 	
     draw () {
@@ -123,13 +121,13 @@ class Cell {
 
 
   setIsAlive (value) {
-	  if (value) {
-			this.isAlive = true;
-		} else {
-		  this.isAlive = false;
-		}
+    if (value) {
+       this.isAlive = true;
+    } else {
+      this.isAlive = false;
+    }
 		//print(value)
-	}
+  }
 
 
   liveOrDie () { 
