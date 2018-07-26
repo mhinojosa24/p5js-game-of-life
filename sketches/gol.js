@@ -2,7 +2,7 @@ var grid;
 
 function setup () {
   createCanvas(400, 400);
-  grid = new Grid(20);
+  grid = new Grid(100);
   grid.randomize();
 }
 
@@ -10,18 +10,15 @@ function setup () {
 function draw () {
   background(250);
   grid.draw();
+  grid.updatePopulation();
+  grid.updateNeighborCounts();
 }
 
 
 function mousePressed () {
-  //grid.updatePopulation();
-  var randomColumn = floor(random(grid.numberOfColumns));
-  var randomRow = floor(random(grid.numberOfRows));
-
-  var randomCell = grid.cells[randomColumn][randomRow];
-  var neighborCount = grid.getNeighbors(randomCell).length;
-
-  print("cell at " + randomCell.column + ", " + randomCell.row + " has " + neighborCount + " neighbors");  
+  grid.updateNeighborCounts();
+  print(grid.cells)
+	
 }
 
 
@@ -45,24 +42,48 @@ class Grid {
     }
     //print(this.cells)		
   }
-  updatePopulation () {
-    for (var column = 0; column < this.numberOfColumns; column ++) {
-      for (var row = 0; row < this.numberOfRows; row++) 
-        this.cells[column][row].liveOrDie()
-     }
-   }
- }
+	
+	draw () {
+      for (var column = 0; column < this.numberOfColumns; column ++) {
+        for (var row = 0; row < this.numberOfRows; row++) {
+         this.cells[column][row].draw()
+        }
+      }
+    }
+	updatePopulation () {
+	  for (var column = 0; column < this.numberOfColumns; column ++) {
+            for (var row = 0; row < this.numberOfRows; row++) {
+              this.cells[column][row].liveOrDie()
+        }
+      }
+    }
 	
 	
     randomize () {
       for (var column = 0; column < this.numberOfColumns; column ++) {
         for (var row = 0; row < this.numberOfRows; row++) {
-					var value = floor(random(2));
+	  var value = floor(random(2));
           this.cells[column][row].setIsAlive(value);
         }
       }
-      //print(this.cells)
+	//print(this.cells)
     }
+    updateNeighborCounts () {
+      for (var column = 0; column < this.numberOfColumns; column ++) {
+        for (var row = 0; row < this.numberOfRows; row++) {
+	  var currentCell = this.cells[column][row];
+	  currentCell.liveNeighborCount = 0;
+					
+	  var neighborsPal = this.getNeighbors(currentCell)
+	  for (var cp in neighborsPal){
+	    if (neighborsPal[cp].isAlive){
+	      currentCell.liveNeighborCount += 1;
+	      } 		
+	    }			
+	  }
+        }
+      }
+    
 	
     getNeighbors (currentCell) {
       var neighbors = [];
@@ -72,34 +93,30 @@ class Grid {
           var neighborX = currentCell.column + xOffset;
           var neighborY = currentCell.row + yOffset;
 					
-          var neighborCell = this.cells[neighborX][neighborY]; 
+	  if (this.isValidPosition(neighborX, neighborY)) {
+	    var neighborCell = this.cells[neighborX][neighborY]; 
 
-	  //if (neighborCell != currentCell) {
-	    //neighbors.push(currentCell)
-	  //} 
-        }				
-      }
-			
-      return neighbors;
-    }
-	
-    isValidPosition () {
-    }
-
-	
-    draw () {
-      for (var column = 0; column < this.numberOfColumns; column ++) {
-        for (var row = 0; row < this.numberOfRows; row++) {
-         this.cells[column][row].draw()
+	  if (neighborCell != currentCell) {
+       	    neighbors.push(neighborCell)
+	    }
+          }	
         }
       }
+      return neighbors;
     }
+
+    isValidPosition (column, row) {
+      var validX = column >= 0 && column < this.numberOfColumns;
+      var validY = row >= 0 && row < this.numberOfRows;
+		
+    return validX && validY
   }
+}
 
 
 class Cell {
   constructor(column, row, size) {
-	this.column = column;
+    this.column = column;
     this.row = row;
     this.size = size;
     this.isAlive = false;
@@ -122,15 +139,19 @@ class Cell {
 
   setIsAlive (value) {
     if (value) {
-       this.isAlive = true;
+      this.isAlive = true;
     } else {
-      this.isAlive = false;
+    this.isAlive = false;
     }
-		//print(value)
+    //print(value)
   }
 
-
   liveOrDie () { 
-		
-	}
+    if (this.isAlive && this.liveNeighborCount < 2){
+      this.isAlive = false;
+    } else if (this.isAlive && this.liveNeighborCount > 3){
+        this.isAlive = false;
+    } else (this.isAlive = !false && this.liveNeighborCount === 3)
+        this.isAlive = true;
+    }
 }
