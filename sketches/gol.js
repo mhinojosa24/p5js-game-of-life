@@ -2,7 +2,7 @@ var grid;
 
 function setup () {
   createCanvas(400, 400);
-  grid = new Grid(100);
+  grid = new Grid(20);
   grid.randomize();
   //print(grid.isValidPosition(0, 0));
   //print(grid.isValidPosition(-1, -1));
@@ -176,7 +176,7 @@ class Cell {
       this.isAlive = false;
     } else if (this.isAlive && this.liveNeighborCount > 3) {
       this.isAlive = false;
-    } else if (this.isAlive = !false && this.liveNeighborCount == 3) {
+    } else if (this.isAlive == false && this.liveNeighborCount == 3) {
       this.isAlive = true;
     }
   }
