@@ -1,4 +1,4 @@
-var grid;
+ var grid;
 
 function setup () {
   createCanvas(400, 400);
@@ -11,32 +11,21 @@ function setup () {
 
 function draw () {
   background(250);
-	
+  
   grid.updateNeighborCounts();
   grid.updatePopulation();
   grid.draw();
-	
+  
 }
 
 
 function mousePressed () {
-	
-//var randomColumn = floor(random(grid.numberOfColumns));
-//var randomRow = floor(random(grid.numberOfRows));
-
-//var randomCell = grid.cells[randomColumn][randomRow];
-//var neighborCount = grid.getNeighbors(randomCell).length;
-
-//print("cell at " + randomCell.column + ", " + randomCell.row + " has " + neighborCount + " neighbors");
-	
-	
-	
-	
-//grid.updatePopulation();
-//grid.updateNeighborCounts();
-print(grid.cells)
-	
+  grid.randomize();
+  //grid.iamPressed();
+  //print(grid.cells)
 }
+
+
 
 
 class Grid {
@@ -46,22 +35,24 @@ class Grid {
     this.cellSize = cellSize;
     this.numberOfColumns = floor(width / this.cellSize);
     this.numberOfRows = floor(height / this.cellSize);
-		
+    
+
     this.cells = new Array(this.numberOfColumns);
     for (var column = 0; column < this.numberOfColumns; column ++) {
       this.cells[column] = new Array(this.numberOfRows);
     }
+    
 
     for (var column = 0; column < this.numberOfColumns; column ++) {
       for (var row = 0; row < this.numberOfRows; row++) {
         this.cells[column][row] = new Cell(column, row, cellSize)
       }
     }
-    //print(this.cells)		
+    //print(this.cells)   
   }
-	
-	
-	
+  
+  
+  
     draw () {
       for (var column = 0; column < this.numberOfColumns; column ++) {
         for (var row = 0; row < this.numberOfRows; row++) {
@@ -69,9 +60,10 @@ class Grid {
         }
       }
     }
-	
-	
-	
+   
+    
+  
+  
     randomize () {
       for (var column = 0; column < this.numberOfColumns; column ++) {
         for (var row = 0; row < this.numberOfRows; row++) {
@@ -85,57 +77,59 @@ class Grid {
     updateNeighborCounts () {
       for (var column = 0; column < this.numberOfColumns; column ++) {
         for (var row = 0; row < this.numberOfRows; row++) {
-	  var currentCell = this.cells[column][row];
-	  currentCell.liveNeighborCount = 0;
-					
-	  var neighborsPal = this.getNeighbors(currentCell)
-	  for (var cp in neighborsPal){
-	    if (neighborsPal[cp].isAlive){
-	      currentCell.liveNeighborCount += 1;
-            } 		
-          }			
-	}
+          var currentCell = this.cells[column][row];
+          currentCell.liveNeighborCount = 0;
+          
+          var neighborsPal = this.getNeighbors(currentCell)
+          for (var cp in neighborsPal){
+            if (neighborsPal[cp].isAlive){
+              currentCell.liveNeighborCount += 1;
+            }     
+          }     
+        }
       }
     }
     
-	
+  
     getNeighbors (currentCell) {
       var neighbors = [];
-			
-      for (var xOffset = -1; xOffset <= 1; xOffset++) {
-        for (var yOffset = -1; yOffset <= 1; yOffset++) {
+      
+      for (var xOffset = -2; xOffset <= 1; xOffset++) {
+        for (var yOffset = -2; yOffset <= 1; yOffset++) {
           var neighborX = currentCell.column + xOffset;
           var neighborY = currentCell.row + yOffset;
-					
-	  if (this.isValidPosition(neighborX, neighborY)) {
-	    var neighborCell = this.cells[neighborX][neighborY]; 
+          
+          if (this.isValidPosition(neighborX, neighborY)) {
+            var neighborCell = this.cells[neighborX][neighborY]; 
 
-	  if (neighborCell != currentCell) {
-	    neighbors.push(neighborCell)
-	    }
-          }	
+          if (neighborCell != currentCell) {
+            neighbors.push(neighborCell)
+            }
+          } 
         }
       }
       return neighbors;
     }
-	
-	
-  isValidPosition (column, row) {
-    var validX = column >= 0 && column < this.numberOfColumns;
-    var validY = row >= 0 && row < this.numberOfRows;
+  
+  
+    isValidPosition (column, row) {
+      var validX = column >= 0 && column < this.numberOfColumns;
+      var validY = row >= 0 && row < this.numberOfRows;
 
-    return validX && validY
-  }
+      return validX && validY
+    }
 
 
-  updatePopulation () {
-    for (var column = 0; column < this.numberOfColumns; column ++) {
-      for (var row = 0; row < this.numberOfRows; row++) {
-        this.cells[column][row].liveOrDie()
-          }
+    updatePopulation () {
+      for (var column = 0; column < this.numberOfColumns; column ++) {
+        for (var row = 0; row < this.numberOfRows; row++) {
+          this.cells[column][row].liveOrDie()
+
         }
       }
+
     }
+  }
 
 
 class Cell {
@@ -146,9 +140,9 @@ class Cell {
     this.isAlive = false;
     this.liveNeighborCount = 0;
   }
-	
-	
-	
+  
+  
+  
   draw () {
     
     if (this.isAlive) {
@@ -160,6 +154,7 @@ class Cell {
     rect(this.column * this.size + 1, this.row * this.size + 1, this.size - 1, this.size - 1);
   }
 
+  
 
   setIsAlive (value) {
     if (value) {
