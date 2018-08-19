@@ -94,8 +94,8 @@ class Grid {
     getNeighbors (currentCell) {
       var neighbors = [];
       
-      for (var xOffset = -2; xOffset <= 1; xOffset++) {
-        for (var yOffset = -2; yOffset <= 1; yOffset++) {
+      for (var xOffset = -1; xOffset <= 1; xOffset++) {
+        for (var yOffset = -1; yOffset <= 1; yOffset++) {
           var neighborX = currentCell.column + xOffset;
           var neighborY = currentCell.row + yOffset;
           
